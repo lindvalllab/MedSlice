@@ -1,0 +1,5 @@
+name: sectioning
+channels:
+  - conda-forge
+dependencies:
+  - weasyprint
