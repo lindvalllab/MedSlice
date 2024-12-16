@@ -1,4 +1,5 @@
 import tempfile
+import pandas as pd
 from weasyprint import HTML
 
 class PDFGenerator:
@@ -7,7 +8,8 @@ class PDFGenerator:
     This version:
     - Has two possible predicted annotations: RCH (yellow) and A&P (blue).
     - Has two optional sets of ground truth annotations: RCH (red text) and A&P (purple text).
-    - If both ground truths apply to the same segment, both classes are applied, and purple will override red.
+    - If both ground truths apply to the same segment, both classes are applied, and purple overrides red.
+    - Ensures that a label for a given predicted annotation appears only once per annotation segment.
     """
 
     def __init__(self, notes_df, 
@@ -21,10 +23,6 @@ class PDFGenerator:
         - ap_start_col, ap_end_col: column names for A&P annotation (prediction)
         - gt_rch_start_col, gt_rch_end_col: optional column names for RCH ground truth
         - gt_ap_start_col, gt_ap_end_col: optional column names for A&P ground truth
-
-        If ground truth columns are provided and valid, text under those intervals will be colored:
-        - RCH GT: red text
-        - A&P GT: purple text
         """
         self.notes_df = notes_df.sort_index()
         self.rch_start_col = rch_start_col
@@ -60,13 +58,17 @@ class PDFGenerator:
             "border-radius: 3px; text-align: center; margin-right: 5px;"
             "vertical-align: middle; margin-left: 5px}"
         )
-        self.html_content += ".page-break { page-break-before: always; }" 
+        self.html_content += ".page-break { page-break-before: always; }"
+        self.html_content += ".legend { text-align: center; margin-bottom: 10px; }"
         self.html_content += "</style></head><body>"
 
         for index, row in self.notes_df.iterrows():
             # Add a page break before each new note (except the first one)
             if index > 0:
                 self.html_content += "<div class='page-break'></div>"
+
+            # Add legend for each page
+            self.html_content += self.create_legend()
 
             self.html_content += f"<h2>Note {index}</h2>"
 
@@ -79,22 +81,31 @@ class PDFGenerator:
 
         self.html_content += "</body></html>"
 
+    def create_legend(self):
+        """
+        Create a centered legend line that shows:
+        - RCH ground truth (red text) if provided
+        - A&P ground truth (purple text) if provided
+        """
+        legend_html = "<div class='legend'>"
+
+        # Only show RCH GT if columns are provided
+        if self.gt_rch_start_col is not None and self.gt_rch_end_col is not None:
+            legend_html += "<span class='ground-truth-rch'>RCH GT</span> &nbsp;"
+
+        # Only show A&P GT if columns are provided
+        if self.gt_ap_start_col is not None and self.gt_ap_end_col is not None:
+            legend_html += "<span class='ground-truth-ap'>A&P GT</span>"
+
+        legend_html += "</div>"
+        return legend_html
+
     def get_annotations_from_row(self, row):
         """
         Returns a tuple: (pred_annotations, gt_rch_annotation, gt_ap_annotation)
-
-        pred_annotations: list of 0-2 dicts for predictions:
-            [{"start": int, "end": int, "labels": ["RCH"]}, {"start":..., "end":..., "labels":["A&P"]}]
-        
-        gt_rch_annotation: dict or None
-            {"start": int, "end": int} if RCH GT is valid, else None
-
-        gt_ap_annotation: dict or None
-            {"start": int, "end": int} if A&P GT is valid, else None
         """
         pred_annotations = []
 
-        # Helper to check if a start/end pair is valid
         def valid_interval(s, e):
             return not pd.isna(s) and not pd.isna(e)
 
@@ -131,13 +142,9 @@ class PDFGenerator:
     def highlight_text(self, note_text, pred_annotations, gt_rch_annotation, gt_ap_annotation):
         """
         Highlight the sections of the note text based on predictions and ground truth.
-        Priority/order:
-        - Ground truth (RCH: red, A&P: purple)
-        - Predictions (RCH: yellow highlight, A&P: blue highlight)
-
-        If segment is covered by both GT and predictions, apply both color classes and highlight.
-        If both GT RCH and GT A&P cover the same segment, both classes (.ground-truth-rch and .ground-truth-ap) are added.
-        Because both apply color styles, purple (A&P GT) will override red (RCH GT) text color.
+        If segment is covered by both GT and predictions, apply both styles.
+        
+        Ensure that a label for a given predicted annotation is only displayed once.
         """
         boundaries = {0, len(note_text)}
         for ann in pred_annotations:
@@ -159,6 +166,8 @@ class PDFGenerator:
             intervals.append((sorted_boundaries[i], sorted_boundaries[i+1]))
 
         highlighted_text = ""
+        # Keep track of which annotations have had their label displayed
+        displayed_annotations = set()
         
         for start, end in intervals:
             segment = note_text[start:end]
@@ -174,16 +183,23 @@ class PDFGenerator:
             css_classes = []
             label_tag = ""
 
-            # Prediction label and highlight
             if covering_pred:
+                # Take the first covering prediction
                 pred_ann = covering_pred[0]
                 label_type = pred_ann['labels'][0] if pred_ann['labels'] else "Unknown"
+                
+                # Determine if we should display the label
+                ann_id = (pred_ann['start'], pred_ann['end'], label_type)
+                # Only add label if we haven't displayed it before
+                if ann_id not in displayed_annotations:
+                    label_tag = f"<span class='label-type'>{label_type}: </span>"
+                    displayed_annotations.add(ann_id)
+
                 # Determine background color by label
                 if label_type == "RCH":
                     css_classes.append('highlight-first')   # Yellow
                 elif label_type == "A&P":
                     css_classes.append('highlight-second')  # Blue
-                label_tag = f"<span class='label-type'>{label_type}: </span>"
 
             # Ground truth text colors
             if rch_gt_covers:
