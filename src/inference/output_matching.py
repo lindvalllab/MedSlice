@@ -96,7 +96,7 @@ def get_pred_indexes_section(df, section, fuzz_threshold: int = 80):
     Apply fuzzy matching to assign predicted start and end strings for a section.
 
     :param df: DataFrame with 'note_text' and prediction columns.
-    :param section: The section name (e.g., 'rch', 'ap').
+    :param section: The section name (e.g., 'RCH', 'AP').
     :param fuzz_threshold: Minimum score for fuzzy matching.
     :return: DataFrame with new columns '{section}_start_pred' and '{section}_end_pred'.
     """
@@ -115,6 +115,6 @@ def get_pred_indexes(df, fuzz_threshold: int = 80):
     :param fuzz_threshold: Minimum score for fuzzy matching.
     :return: DataFrame with new columns '{section}_start_pred' and '{section}_end_pred' for both section.
     """
-    df = get_pred_indexes_section(df, "HPI_Interval_Hx", fuzz_threshold)
-    df = get_pred_indexes_section(df, "A&P", fuzz_threshold)
+    df = get_pred_indexes_section(df, "HPI_Interval_Hx", fuzz_threshold) # TODO: change section name
+    df = get_pred_indexes_section(df, "A&P", fuzz_threshold) # TODO: change section name
     return df
