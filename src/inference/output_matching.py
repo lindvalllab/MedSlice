@@ -91,7 +91,7 @@ def fuzzy_matching_per_row(row, section, fuzz_threshold: int = 80):
 
     return start_index, end_index_end
 
-def get_pred_indexes(df, section, fuzz_threshold: int = 80):
+def get_pred_indexes_section(df, section, fuzz_threshold: int = 80):
     """
     Apply fuzzy matching to assign predicted start and end strings for a section.
 
@@ -105,4 +105,16 @@ def get_pred_indexes(df, section, fuzz_threshold: int = 80):
     df[f'{section}_start_pred'], df[f'{section}_end_pred'] = zip(*df.apply(lambda row: fuzzy_matching_per_row(row,
                                                                                                               section,
                                                                                                               fuzz_threshold), axis=1))
+    return df
+
+def get_pred_indexes(df, fuzz_threshold: int = 80):
+    """
+    Apply fuzzy matching to assign predicted start and end strings for both RCH and A&P sections.
+
+    :param df: DataFrame with 'note_text' and prediction columns.
+    :param fuzz_threshold: Minimum score for fuzzy matching.
+    :return: DataFrame with new columns '{section}_start_pred' and '{section}_end_pred' for both section.
+    """
+    df = get_pred_indexes_section(df, "HPI_Interval_Hx", fuzz_threshold)
+    df = get_pred_indexes_section(df, "A&P", fuzz_threshold)
     return df
