@@ -3,3 +3,7 @@ channels:
   - conda-forge
 dependencies:
   - weasyprint
+  - notebook
+  - jupyter
+  - pandas
+  - rapidfuzz

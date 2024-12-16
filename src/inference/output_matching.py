@@ -109,7 +109,7 @@ def get_pred_indexes_section(df, section, fuzz_threshold: int = 80):
 
 def get_pred_indexes(df, fuzz_threshold: int = 80):
     """
-    Apply fuzzy matching to assign predicted start and end strings for both RCH and A&P sections.
+    Apply fuzzy matching to assign predicted start and end strings for both RCH and AP sections.
 
     :param df: DataFrame with 'note_text' and prediction columns.
     :param fuzz_threshold: Minimum score for fuzzy matching.
