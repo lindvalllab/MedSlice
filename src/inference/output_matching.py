@@ -115,6 +115,6 @@ def get_pred_indexes(df, fuzz_threshold: int = 80):
     :param fuzz_threshold: Minimum score for fuzzy matching.
     :return: DataFrame with new columns '{section}_start_pred' and '{section}_end_pred' for both section.
     """
-    df = get_pred_indexes_section(df, "HPI_Interval_Hx", fuzz_threshold) # TODO: change section name
-    df = get_pred_indexes_section(df, "A&P", fuzz_threshold) # TODO: change section name
+    df = get_pred_indexes_section(df, "RCH", fuzz_threshold)
+    df = get_pred_indexes_section(df, "AP", fuzz_threshold)
     return df

@@ -74,9 +74,9 @@ def scorer_row(df):
     :return: DataFrame with added columns for metrics (EM, Precision, Recall, F1 Score) 
              for each section (e.g., "RCH_EM", "AP_F1_Score").
     """
-    rch_scores = scorer_section(df, "HPI_Interval_Hx")  # TODO: change column name
-    ap_scores = scorer_section(df, "A&P")  # TODO: change column name
-
+    rch_scores = scorer_section(df, "RCH")
+    ap_scores = scorer_section(df, "AP")
+    
     for metric in METRICS:
         df[f'RCH_{metric}'] = rch_scores[metric]
         df[f'AP_{metric}'] = ap_scores[metric]
