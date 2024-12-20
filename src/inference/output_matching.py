@@ -44,7 +44,7 @@ def fuzzy_matching_per_row(row, section, fuzz_threshold: int = 80):
     start and end strings. Fuzzy matching is applied to find the closest matches within the note.
 
     :param row: A Pandas Series representing a row from a DataFrame. Must have:
-                 - 'note_text' column for the full note text.
+                 - 'note' column for the full note text.
                  - start_col for the start string.
                  - end_col for the end string.
     :param section: The section name (e.g., 'rch', 'ap').
@@ -53,15 +53,15 @@ def fuzzy_matching_per_row(row, section, fuzz_threshold: int = 80):
     :return: A tuple (start_index, end_index) indicating the character-level indices in the note text 
              that encompass the extracted section. Returns (NaN, NaN) if no valid extraction is found.
     """
-    note_text = row['note_text']
-    start_candidate = row[f"{section}_start_str_pred"]
-    end_candidate = row[f"{section}_end_str_pred"]
+    note = row['note']
+    start_candidate = row[f"{section}_start_pred"]
+    end_candidate = row[f"{section}_end_pred"]
 
     if pd.isna(start_candidate) or pd.isna(end_candidate):
         return np.nan, np.nan
 
     # Generate overlapping sequences of 5 words for fuzzy matching
-    note_words = note_text.split()
+    note_words = note.split()
     overlapping_sequences = [' '.join(note_words[i:i+5]) for i in range(len(note_words) - 4)]
 
     # Fuzzy match the start candidate
@@ -79,9 +79,9 @@ def fuzzy_matching_per_row(row, section, fuzz_threshold: int = 80):
         return np.nan, np.nan
 
     # Find the exact substring matches in the note text
-    start_found, start_index, start_index_end = find_substr_match(note_text, best_start_match)
+    start_found, start_index, start_index_end = find_substr_match(note, best_start_match)
     if start_found:
-        end_found, end_index, end_index_end = find_substr_match(note_text, best_end_match, start_index)
+        end_found, end_index, end_index_end = find_substr_match(note, best_end_match, start_index)
     else:
         return np.nan, np.nan
 
@@ -95,13 +95,13 @@ def get_pred_indexes_section(df, section, fuzz_threshold: int = 80):
     """
     Apply fuzzy matching to assign predicted start and end strings for a section.
 
-    :param df: DataFrame with 'note_text' and prediction columns.
+    :param df: DataFrame with 'note' and prediction columns.
     :param section: The section name (e.g., 'RCH', 'AP').
     :param fuzz_threshold: Minimum score for fuzzy matching.
     :return: DataFrame with new columns '{section}_start_pred' and '{section}_end_pred'.
     """
-    assert f"{section}_start_str_pred" in df.columns, f"Column '{section}_start_str_pred' not found in df.columns."
-    assert f"{section}_end_str_pred" in df.columns, f"Column '{section}_end_str_pred' not found in df.columns."
+    assert f"{section}_start_pred" in df.columns, f"Column '{section}_start_pred' not found in df.columns."
+    assert f"{section}_end_pred" in df.columns, f"Column '{section}_end_pred' not found in df.columns."
     df[f'{section}_start_pred'], df[f'{section}_end_pred'] = zip(*df.apply(lambda row: fuzzy_matching_per_row(row,
                                                                                                               section,
                                                                                                               fuzz_threshold), axis=1))
@@ -111,7 +111,7 @@ def get_pred_indexes(df, fuzz_threshold: int = 80):
     """
     Apply fuzzy matching to assign predicted start and end strings for both RCH and AP sections.
 
-    :param df: DataFrame with 'note_text' and prediction columns.
+    :param df: DataFrame with 'note' and prediction columns.
     :param fuzz_threshold: Minimum score for fuzzy matching.
     :return: DataFrame with new columns '{section}_start_pred' and '{section}_end_pred' for both section.
     """

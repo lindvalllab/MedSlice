@@ -43,12 +43,12 @@ def postprocessing(df):
     """
     Add two new columns 'RCH_pred' and 'AP_pred' to the DataFrame.
     
-    'RCH_pred' extracts substrings from 'note_text' using 'RCH_start_pred' and 'RCH_end_pred'.
-    'AP_pred' extracts substrings from 'note_text' using 'AP_start_pred' and 'AP_end_pred'.
+    'RCH_pred' extracts substrings from 'note' using 'RCH_start_pred' and 'RCH_end_pred'.
+    'AP_pred' extracts substrings from 'note' using 'AP_start_pred' and 'AP_end_pred'.
     
     :param df: pandas.DataFrame
         Input DataFrame containing the following columns:
-        - 'note_text': Full text where substrings are extracted.
+        - 'note': Full text where substrings are extracted.
         - 'RCH_start_pred' and 'RCH_end_pred': Start and end indices for RCH section.
         - 'AP_start_pred' and 'AP_end_pred': Start and end indices for AP section.
     :return: pandas.DataFrame
@@ -58,12 +58,12 @@ def postprocessing(df):
     """
 
     # Add the 'RCH_pred' column
-    df['RCH_pred'] = extract_section_from_indices(df, text_col='note_text',
+    df['RCH_pred'] = extract_section_from_indices(df, text_col='note',
                                                   start_col='RCH_start_pred',
                                                   end_col='RCH_end_pred')
     
     # Add the 'AP_pred' column
-    df['AP_pred'] = extract_section_from_indices(df, text_col='note_text',
+    df['AP_pred'] = extract_section_from_indices(df, text_col='note',
                                                  start_col='AP_start_pred',
                                                  end_col='AP_end_pred')
     return df

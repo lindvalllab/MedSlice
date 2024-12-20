@@ -18,7 +18,7 @@ class PDFGenerator:
                  gt_ap_start_col=None, gt_ap_end_col=None):
         """
         Initialize with:
-        - notes_df: DataFrame with 'note_text' and prediction columns.
+        - notes_df: DataFrame with 'note' and prediction columns.
         - rch_start_col, rch_end_col: column names for RCH annotation (prediction)
         - ap_start_col, ap_end_col: column names for A&P annotation (prediction)
         - gt_rch_start_col, gt_rch_end_col: optional column names for RCH ground truth
@@ -72,10 +72,10 @@ class PDFGenerator:
 
             self.html_content += f"<h2>Note {index}</h2>"
 
-            note_text = row['note_text']
+            note = row['note']
             # Generate annotations from the given columns
             pred_annotations, gt_rch_annotation, gt_ap_annotation = self.get_annotations_from_row(row)
-            highlighted_text = self.highlight_text(note_text, pred_annotations, gt_rch_annotation, gt_ap_annotation)
+            highlighted_text = self.highlight_text(note, pred_annotations, gt_rch_annotation, gt_ap_annotation)
 
             self.html_content += f"<p>{highlighted_text}</p>"
 
@@ -139,14 +139,14 @@ class PDFGenerator:
 
         return pred_annotations, gt_rch_annotation, gt_ap_annotation
 
-    def highlight_text(self, note_text, pred_annotations, gt_rch_annotation, gt_ap_annotation):
+    def highlight_text(self, note, pred_annotations, gt_rch_annotation, gt_ap_annotation):
         """
         Highlight the sections of the note text based on predictions and ground truth.
         If segment is covered by both GT and predictions, apply both styles.
         
         Ensure that a label for a given predicted annotation is only displayed once.
         """
-        boundaries = {0, len(note_text)}
+        boundaries = {0, len(note)}
         for ann in pred_annotations:
             boundaries.add(ann['start'])
             boundaries.add(ann['end'])
@@ -170,7 +170,7 @@ class PDFGenerator:
         displayed_annotations = set()
         
         for start, end in intervals:
-            segment = note_text[start:end]
+            segment = note[start:end]
 
             # Check GT coverage
             rch_gt_covers = gt_rch_annotation and gt_rch_annotation['start'] <= start and gt_rch_annotation['end'] >= end

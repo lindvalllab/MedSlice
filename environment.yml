@@ -2,8 +2,10 @@ name: sectioning
 channels:
   - conda-forge
 dependencies:
+  - python=3.12
   - weasyprint
   - notebook
   - jupyter
   - pandas
   - rapidfuzz
+  - transformers
