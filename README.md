@@ -1,4 +1,3 @@
-Sure! Here is the updated content in a format you can directly copy and paste into your README.md file:
 
 # Sectioning
 
