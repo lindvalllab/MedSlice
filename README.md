@@ -25,7 +25,7 @@ This repository serves to generate RCH (History of Present Illness and Interval 
    You will need to install VLLM with pip:
    ```bash
    pip install vllm
-   
+
 
 ## Usage
 
