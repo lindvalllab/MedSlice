@@ -34,3 +34,30 @@ The entry point for running the sectioning workflow is the `sectioning.py` scrip
 * `data_path`: Path to the input data file. Required.
 * `sectioned_output_path`: Path to save the postprocessed CSV data. Required.
 * `--pdf_output_path`, `-p`: Path to save the generated PDF report. If not provided, no PDF will be generated.
+
+## Project Organization
+
+   ├── LICENSE                <- GPL-3.0 License
+   ├── README.md              <- The top-level README for developers using this project.
+   ├── data                   <- A placeholder for your data, one or several csv files.
+   ├── environment.yml        <- The requirements file for reproducing the sectioning environment.
+   ├── models                 <- A placeholder for your models, has to be readable by VLLM.
+   ├── sectioning.py          <- Main script to run the sectioning. 
+   └── src                    <- Additional source code for use in this project.
+      ├── __init__.py               <- Makes src a Python module.
+      ├── benchmarking              <- Scripts to benchmark the sectioning tool, when the ground truth is provided.
+      │   ├── __init__.py                 <- Makes benchmarking a Python module.
+      │   └── scorer.py                   <- Code for the sectioning scorer.
+      ├── inference                 <- Scripts to perform inference using VLLM and fuzzy matching.
+      │   ├── __init__.py                 <- Makes inference a Python module.
+      │   ├── inference.py                <- Code for VLLM inference.
+      │   ├── output_matching.py          <- Code for fuzzy matching between LLM outputs and input.
+      │   ├── prompt.txt                  <- Prompt passed to the model, as a txt file.
+      │   └── schema.json                 <- Output schema passed to the model, as a json file.
+      ├── preprocessing             <- Scripts to preprocess the inputs before downstream processing. You can adapt this to your input format and structure.
+      │   ├── __init__.py                 <- Makes preprocessing a Python module.
+      │   └── preprocessing.py            <- Code for preprocessing the data.
+      └── report                    <- Scripts to report the sections as pdf and csv file.
+         ├── __init__.py                  <- Makes report a Python module.
+         ├── pdfgenerator.py              <- Code to generate the PDF file with overlayed LLM sections.
+         └── postprocessing.py            <- Code to extract the sections as text using indexes found with fuzzy matching.
