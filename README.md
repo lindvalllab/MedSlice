@@ -26,7 +26,6 @@ This repository serves to generate RCH (History of Present Illness and Interval 
    ```bash
    pip install vllm
 
-
 ## Usage
 
 The entry point for running the sectioning workflow is the `sectioning.py` script. It takes the following arguments:
