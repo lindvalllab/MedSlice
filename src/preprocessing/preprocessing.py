@@ -76,7 +76,8 @@ class Preprocessing:
         RCH_end_gt = pd.NA
         AP_start_gt = pd.NA
         AP_end_gt = pd.NA
-
+        if isinstance(json_string, list):
+            json_string = json_string[0]
         if isinstance(json_string, str):
             try:
                 parsed_value = json.loads(json_string)
@@ -144,7 +145,7 @@ class Preprocessing:
         ap_ends = []
         
         for _, row in df.iterrows():
-            RCH_start_gt, RCH_end_gt, AP_start_gt, AP_end_gt = self.process_annotations(row.get(annotations_column, None)[0])
+            RCH_start_gt, RCH_end_gt, AP_start_gt, AP_end_gt = self.process_annotations(row.get(annotations_column, None))
             rch_starts.append(RCH_start_gt)
             rch_ends.append(RCH_end_gt)
             ap_starts.append(AP_start_gt)
@@ -184,32 +185,25 @@ class Preprocessing:
         df = self.get_dataframe()
         
         # Determine if annotated
-        is_annotated = 'annotations' in df.columns
+        annotations_column = None
+        if 'annotations' in df.columns:
+            annotations_column = 'annotations'
+        elif 'label' in df.columns:
+            annotations_column = 'label'
         
-        if is_annotated:
-            # Annotated format
+        # Annotation extraction as ground truth
+        if annotations_column:
+            df = self.transform_annotated_df(df, annotations_column=annotations_column)
+        
+        if "note" not in df.columns:
+            # Renaming the note column for consistency in downstream processing
             if self.note_text_column is not None:
-                # User provided a column for notes
-                col_to_rename = self.note_text_column
-                if col_to_rename not in df.columns:
-                    raise KeyError(f"The column '{col_to_rename}' is not present in the annotated data.")
-                df = df.rename(columns={col_to_rename: 'note'})
-            
-            # Transform to extract annotations and notes (if needed)
-            df = self.transform_annotated_df(df, annotations_column='annotations')
-            
-        else:
-            # Non-annotated format
-            if self.note_text_column is not None:
-                # Use user-provided column
                 col_to_rename = self.note_text_column
             else:
                 # Default to "note_text" if not provided
                 col_to_rename = 'note_text'
-            
             if col_to_rename not in df.columns:
-                raise KeyError(f"The column '{col_to_rename}' is not present in the non-annotated data.")
-            
+                raise KeyError(f"The column '{col_to_rename}' is not present in the data.")
             df = df.rename(columns={col_to_rename: 'note'})
         
         return df
