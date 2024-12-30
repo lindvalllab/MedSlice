@@ -89,8 +89,17 @@ def scorer(df):
     :param df: DataFrame containing ground truth and predicted indices for all sections..
     """
     scored_df = scorer_row(df)
-    metric_cols = []
+    metrics_data = {metric: [] for metric in METRICS}
+    
+    # Collect metrics for RCH and AP
     for metric in METRICS:
-        metric_cols.append(f'RCH_{metric}')
-        metric_cols.append(f'AP_{metric}')
-    print(scored_df[metric_cols].mean())
+        metrics_data[metric].append(scored_df[f'RCH_{metric}'].mean())
+        metrics_data[metric].append(scored_df[f'AP_{metric}'].mean())
+
+    # Create a DataFrame
+    result_df = pd.DataFrame(
+        metrics_data, 
+        index=['RCH', 'AP']
+    ).transpose()
+
+    return result_df
