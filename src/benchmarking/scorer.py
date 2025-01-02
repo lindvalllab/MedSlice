@@ -100,6 +100,6 @@ def scorer(df):
     result_df = pd.DataFrame(
         metrics_data, 
         index=['RCH', 'AP']
-    ).transpose()
+    ).transpose().round(2)
 
     return result_df

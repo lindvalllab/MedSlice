@@ -128,8 +128,8 @@ class Inference:
             results[index] = result_row
             generation_status[index] = False
 
-        # Convert the results to a DataFrame
-        results_df = pd.DataFrame(results)
+        # Create the results DataFrame with the same index as the input DataFrame
+        results_df = pd.DataFrame(results, index=df.index)
         # Concatenate the new columns with the original DataFrame
         df = pd.concat([df, results_df], axis=1)
         return df
