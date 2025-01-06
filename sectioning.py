@@ -5,10 +5,10 @@ from src.inference import Inference, get_pred_indexes
 from src.report import PDFGenerator, postprocessing
 
 
-def main(model_path, data_path, sectioned_output_path, pdf_output_path=None):
+def main(model_path, data_path, sectioned_output_path, pdf_output_path=None, note_text_column=None):
     # Step 1: Preprocess the data
     print(f"Preprocessing data from {data_path}...")
-    preprocessor = Preprocessing(data_path)
+    preprocessor = Preprocessing(data_path, note_text_column=note_text_column)
     df = preprocessor.get_processed_dataframe()
 
     # Step 2: Perform inference
@@ -48,6 +48,7 @@ if __name__ == "__main__":
     parser.add_argument("data_path", type=str, help="Path to the input data.")
     parser.add_argument("sectioned_output_path", type=str, help="Path to save the sectioned data.")
     parser.add_argument("--pdf_output_path", type=str, default=None, help="Path to save the generated PDF.")
+    parser.add_argument("--note_text_column", type=str, default=None, help="Column containing the notes.")
 
     # Parse arguments
     args = parser.parse_args()
@@ -57,5 +58,6 @@ if __name__ == "__main__":
         model_path=args.model_path,
         data_path=args.data_path,
         sectioned_output_path=args.sectioned_output_path,
-        pdf_output_path=args.pdf_output_path
+        pdf_output_path=args.pdf_output_path,
+        note_text_column=args.note_text_column
     )
