@@ -85,9 +85,9 @@ python sectioning.py models/Meta-Llama-3.1-8B-Instruct /path/to/evaluation/datas
          ├── preprocessing             <- Scripts to preprocess the inputs before downstream processing. You can adapt this to your input format and structure.
          │   ├── __init__.py                 <- Makes preprocessing a Python module.
          │   └── preprocessing.py            <- Code for preprocessing the data.
-         ├── prompt.txt                  <- Prompt passed to the model, as a txt file.
+         ├── prompt.txt                <- Prompt passed to the model, as a txt file.
          ├── report                    <- Scripts to report the sections as pdf and csv file.
          │  ├── __init__.py                  <- Makes report a Python module.
          │  ├── pdfgenerator.py              <- Code to generate the PDF file with overlayed LLM sections.
          │  └── postprocessing.py            <- Code to extract the sections as text using indexes found with fuzzy matching.
-         └── schema.json                 <- Output schema passed to the model, as a json file.
+         └── schema.json               <- Output schema passed to the model, as a json file.
