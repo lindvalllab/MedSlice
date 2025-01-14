@@ -30,23 +30,7 @@ This repository serves to generate RCH (History of Present Illness and Interval 
 
 The entry points for running the workflow are the `sectioning.py` and `finetuning.py` scripts. Each script takes specific arguments and can be run directly from the command line.
 
-### 1. `sectioning.py`
-
-This script runs the sectioning workflow for extracting RCH and AP sections from progress notes.
-
-#### Arguments:
-* `model_path`: Path to the trained model directory. **Required**.
-* `data_path`: Path to the input data file. **Required**.
-* `sectioned_output_path`: Path to save the postprocessed CSV data. **Required**.
-* `--pdf_output_path`, `-p`: Path to save the generated PDF report. If not provided, no PDF will be generated.
-* `--note_text_column`: Column containing the notes. Optional, defaults to `None`.
-
-#### Example:
-```bash
-python sectioning.py /path/to/model /path/to/data.csv /path/to/output.csv --pdf_output_path /path/to/report.pdf --note_text_column "notes"
-```
-
-### 2. `finetuning.py`
+### 1. `finetuning.py`
 
 This script fine-tunes a model on custom data using rsLoRA.
 
@@ -63,6 +47,23 @@ This script fine-tunes a model on custom data using rsLoRA.
 #### Example:
 ```bash
 python finetuning.py "unsloth/Llama-3.2-1B-Instruct" data/path/to/dataset.csv --n_epochs 5 --r_lora 16
+```
+
+### 2. `sectioning.py`
+
+This script runs the sectioning workflow for extracting RCH and AP sections from progress notes.
+
+#### Arguments:
+* `model_path`: Path to the trained model directory. **Required**.
+* `data_path`: Path to the input data file. **Required**.
+* `sectioned_output_path`: Path to save the postprocessed CSV data. **Required**.
+* `--pdf_output_path`, `-p`: Path to save the generated PDF report. If not provided, no PDF will be generated.
+* `--note_text_column`: Column containing the notes. Optional, defaults to `None`.
+
+#### Example:
+```bash
+python sectioning.py /path/to/model /path/to/data.csv /path/to/output.csv --pdf_output_path /path/to/report.pdf --note_text_column "notes"
+```
 
 ## Project Organization
 
