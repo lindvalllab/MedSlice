@@ -79,7 +79,7 @@ The CORAL dataset can be used as an example for running the sectioning tool in a
    ```
    This notebook provides a step-by-step guide to using the sectioning tool interactively instead of running a script.
 
-3.	**Output Files**
+3.	**Output Files**  
    In the outputs folder, we provide the sectioned CORAL notes in the form of indexes only, as the CORAL dataset requires credentialed access.
     * For the annotated data, you can merge on the file_number column to retrieve the full dataset.
     * For the unannotated data, you can merge on the coral_idx column to obtain the complete dataframe.
