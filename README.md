@@ -46,7 +46,7 @@ This script fine-tunes a model on custom data using rsLoRA.
 
 #### Example:
 ```bash
-python finetuning.py "unsloth/Llama-3.2-1B-Instruct" data/path/to/dataset.csv --n_epochs 5 --r_lora 16
+python finetuning.py "unsloth/Meta-Llama-3.1-8B-Instruct" data/path/to/finetuning/dataset.csv --n_epochs 5 --r_lora 16
 ```
 
 ### 2. `sectioning.py`
@@ -62,7 +62,7 @@ This script runs the sectioning workflow for extracting RCH and AP sections from
 
 #### Example:
 ```bash
-python sectioning.py /path/to/model /path/to/data.csv /path/to/output.csv --pdf_output_path /path/to/report.pdf --note_text_column "notes"
+python sectioning.py models/Meta-Llama-3.1-8B-Instruct /path/to/evaluation/dataset.csv /path/to/output.csv --pdf_output_path /path/to/report.pdf
 ```
 
 ## Project Organization
