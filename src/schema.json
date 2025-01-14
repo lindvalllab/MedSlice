@@ -1,0 +1,31 @@
+{
+    "type": "object",
+    "properties": {
+        "HPI_Interval_Hx_start": {
+            "type": "string",
+            "minLength": 40,
+            "maxLength": 60
+        },
+        "HPI_Interval_Hx_end": {
+            "type": "string",
+            "minLength": 40,
+            "maxLength": 60
+        },
+        "A&P_start": {
+            "type": "string",
+            "minLength": 40,
+            "maxLength": 60
+        },
+        "A&P_end": {
+            "type": "string",
+            "minLength": 40,
+            "maxLength": 60
+        }
+    },
+    "required": [
+        "HPI_Interval_Hx_start",
+        "HPI_Interval_Hx_end",
+        "A&P_start",
+        "A&P_end"
+    ]
+}
