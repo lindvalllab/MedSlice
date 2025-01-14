@@ -44,6 +44,7 @@ This script runs the sectioning workflow for extracting RCH and AP sections from
 #### Example:
 ```bash
 python sectioning.py /path/to/model /path/to/data.csv /path/to/output.csv --pdf_output_path /path/to/report.pdf --note_text_column "notes"
+```
 
 ### 2. `finetuning.py`
 
