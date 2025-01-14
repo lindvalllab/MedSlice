@@ -38,10 +38,10 @@ class Inference:
         """
         # Load schema and prompt  
         # Construct the path to the JSON file relative to the current file
-        schema_path = os.path.join(current_dir, "schema.json")
+        schema_path = os.path.join(current_dir, "../schema.json")
         with open(schema_path, "r") as f:
             schema = json.load(f)
-        prompt_path = os.path.join(current_dir, "prompt.txt")
+        prompt_path = os.path.join(current_dir, "../prompt.txt")
         with open(prompt_path, "r") as file:
             json_prompt = file.read()
 

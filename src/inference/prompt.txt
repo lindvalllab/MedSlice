@@ -1,9 +1,0 @@
-Your task is to find the parts of a clinical note corresponding to the sections -History of Present Illness and Interval History-, and -Assessment and Plan-. You should organize this information in a JSON output that extracts the first and last five words for each of these sections. If the sections HPI_Interval_Hx or A&P are not in the medical note, return an empty string for the corresponding section's start and end. Below is the medical note: 
-
-### Medical Note:
-{}
-
-And here is the Schema:
-
-### Schema:
-{}

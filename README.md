@@ -81,13 +81,13 @@ python sectioning.py models/Meta-Llama-3.1-8B-Instruct /path/to/evaluation/datas
          ├── inference                 <- Scripts to perform inference using VLLM and fuzzy matching.
          │   ├── __init__.py                 <- Makes inference a Python module.
          │   ├── inference.py                <- Code for VLLM inference.
-         │   ├── output_matching.py          <- Code for fuzzy matching between LLM outputs and input.
-         │   ├── prompt.txt                  <- Prompt passed to the model, as a txt file.
-         │   └── schema.json                 <- Output schema passed to the model, as a json file.
+         │   └── output_matching.py          <- Code for fuzzy matching between LLM outputs and input.
          ├── preprocessing             <- Scripts to preprocess the inputs before downstream processing. You can adapt this to your input format and structure.
          │   ├── __init__.py                 <- Makes preprocessing a Python module.
          │   └── preprocessing.py            <- Code for preprocessing the data.
-         └── report                    <- Scripts to report the sections as pdf and csv file.
-            ├── __init__.py                  <- Makes report a Python module.
-            ├── pdfgenerator.py              <- Code to generate the PDF file with overlayed LLM sections.
-            └── postprocessing.py            <- Code to extract the sections as text using indexes found with fuzzy matching.
+         ├── prompt.txt                  <- Prompt passed to the model, as a txt file.
+         ├── report                    <- Scripts to report the sections as pdf and csv file.
+         │  ├── __init__.py                  <- Makes report a Python module.
+         │  ├── pdfgenerator.py              <- Code to generate the PDF file with overlayed LLM sections.
+         │  └── postprocessing.py            <- Code to extract the sections as text using indexes found with fuzzy matching.
+         └── schema.json                 <- Output schema passed to the model, as a json file.
