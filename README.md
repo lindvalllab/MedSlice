@@ -1,4 +1,3 @@
-
 # Sectioning
 
 ## Overview
@@ -20,19 +19,49 @@ This repository serves to generate RCH (History of Present Illness and Interval 
    conda env create -f environment.yml
    conda activate sectioning
 
-4. **Install VLLM**
-   You will need to install VLLM with pip:
+4. **Install VLLM and Unsloth**
+   You will need to install VLLM and Unsloth with pip:
    ```bash
    pip install vllm
+   pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
+   pip install --no-deps trl peft accelerate bitsandbytes
 
 ## Usage
 
-The entry point for running the sectioning workflow is the `sectioning.py` script. It takes the following arguments:
+The entry points for running the workflow are the `sectioning.py` and `finetuning.py` scripts. Each script takes specific arguments and can be run directly from the command line.
 
-* `model_path`: Path to the trained model directory. Required.
-* `data_path`: Path to the input data file. Required.
-* `sectioned_output_path`: Path to save the postprocessed CSV data. Required.
+### 1. `sectioning.py`
+
+This script runs the sectioning workflow for extracting RCH and AP sections from progress notes.
+
+#### Arguments:
+* `model_path`: Path to the trained model directory. **Required**.
+* `data_path`: Path to the input data file. **Required**.
+* `sectioned_output_path`: Path to save the postprocessed CSV data. **Required**.
 * `--pdf_output_path`, `-p`: Path to save the generated PDF report. If not provided, no PDF will be generated.
+* `--note_text_column`: Column containing the notes. Optional, defaults to `None`.
+
+#### Example:
+```bash
+python sectioning.py /path/to/model /path/to/data.csv /path/to/output.csv --pdf_output_path /path/to/report.pdf --note_text_column "notes"
+
+### 2. `finetuning.py`
+
+This script fine-tunes a model on custom data using rsLoRA.
+
+#### Arguments:
+* `model_name`: Name of the pre-trained model. **Required**.
+* `data_path`: Path to the dataset CSV file. **Required**.
+* `--n_epochs`: Number of training epochs. Optional, defaults to `5`.
+* `--r_lora`: LoRA rank. Optional, defaults to `16`.
+* `--use_rslora`: Whether to use rsLoRA. Optional, defaults to `True`.
+* `--output_folder`: Folder to save the fine-tuned model. Optional, defaults to `"models"`.
+* `--max_seq_length`: Maximum sequence length. Optional, defaults to `8192`.
+* `--load_in_4bit`: Whether to load the model in 4-bit precision. Optional, defaults to `False`.
+
+#### Example:
+```bash
+python finetuning.py "unsloth/Llama-3.2-1B-Instruct" data/path/to/dataset.csv --n_epochs 5 --r_lora 16
 
 ## Project Organization
 
