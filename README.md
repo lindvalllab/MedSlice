@@ -19,7 +19,7 @@ This repository serves to generate RCH (History of Present Illness and Interval 
    conda env create -f environment.yml
    conda activate sectioning
 
-4. **Install VLLM and Unsloth**
+4. **Install VLLM and Unsloth**  
    You will need to install VLLM and Unsloth with pip:
    ```bash
    pip install vllm
@@ -84,7 +84,7 @@ The CORAL dataset can be used as an example for running the sectioning tool in a
     * For the annotated data, you can merge on the file_number column to retrieve the full dataset.
     * For the unannotated data, you can merge on the coral_idx column to obtain the complete dataframe.
 
-4.	**Additional Annotations**
+4.	**Additional Annotations**  
    We also provide 50 notes from the unannotated breast dataset, manually annotated by our annotator KS. These annotations can be found in the columns: ```{section}_start_gt``` and ```{section}_end_gt```
 
 ## Project Organization
