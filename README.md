@@ -65,14 +65,44 @@ This script runs the sectioning workflow for extracting RCH and AP sections from
 python sectioning.py models/Meta-Llama-3.1-8B-Instruct /path/to/evaluation/dataset.csv /path/to/output.csv --pdf_output_path /path/to/report.pdf
 ```
 
+## Dataset: CORAL
+
+The CORAL dataset can be used as an example for running the sectioning tool in a notebook environment.
+
+1. **Download the CORAL dataset**  
+   The dataset is available on PhysioNet and requires credentialed access. You can download it from [PhysioNet - Curated Oncology Reports (CORAL)](https://physionet.org/content/curated-oncology-reports/1.0/) and place it in the `data` folder.
+
+2. **Notebook Example**  
+   An example notebook demonstrating how to generate sections on both the annotated and unannotated CORAL datasets can be found in:
+   ```bash
+   examples/coral.ipynb'
+   ```
+   This notebook provides a step-by-step guide to using the sectioning tool interactively instead of running a script.
+
+3.	**Output Files**
+   In the outputs folder, we provide the sectioned CORAL notes in the form of indexes only, as the CORAL dataset requires credentialed access.
+   * For the annotated data, you can merge on the file_number column to retrieve the full dataset.
+	* For the unannotated data, you can merge on the coral_idx column to obtain the complete dataframe.
+
+4.	**Additional Annotations**
+   We also provide 50 notes from the unannotated breast dataset, manually annotated by our annotator KS. These annotations can be found in the columns: ```{section}_start_gt``` and ```{section}_end_gt```
+
 ## Project Organization
 
       ├── LICENSE                <- GPL-3.0 License
       ├── README.md              <- The top-level README for developers using this project.
       ├── data                   <- A placeholder for your data, one or several csv files.
       ├── environment.yml        <- The requirements file for reproducing the sectioning environment.
+      ├── examples               <- Folder containing coral example for using the sectioning tool
+      │   └── coral.ipynb              <- Example of the sectioning tool for annotating the CORAL dataset
       ├── models                 <- A placeholder for your models, has to be readable by VLLM.
-      ├── sectioning.py          <- Main script to run the sectioning. 
+      ├── sectioning.py          <- Main script to run the sectioning.
+      ├── outputs                <- Output placeholder, where our CORAL outputs are stored as indexes.
+      │   ├── annotated_breastca_outputs.csv
+      │   ├── annotated_pdac_outputs.csv
+      │   ├── unannotated_breastca_outputs.csv
+      │   ├── unannotated_breastca_outputs_KS_labels.csv
+      │   └── unannotated_pdac_outputs.csv
       └── src                    <- Additional source code for use in this project.
          ├── __init__.py               <- Makes src a Python module.
          ├── benchmarking              <- Scripts to benchmark the sectioning tool, when the ground truth is provided.
