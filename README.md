@@ -81,8 +81,8 @@ The CORAL dataset can be used as an example for running the sectioning tool in a
 
 3.	**Output Files**
    In the outputs folder, we provide the sectioned CORAL notes in the form of indexes only, as the CORAL dataset requires credentialed access.
-   * For the annotated data, you can merge on the file_number column to retrieve the full dataset.
-	* For the unannotated data, you can merge on the coral_idx column to obtain the complete dataframe.
+    * For the annotated data, you can merge on the file_number column to retrieve the full dataset.
+    * For the unannotated data, you can merge on the coral_idx column to obtain the complete dataframe.
 
 4.	**Additional Annotations**
    We also provide 50 notes from the unannotated breast dataset, manually annotated by our annotator KS. These annotations can be found in the columns: ```{section}_start_gt``` and ```{section}_end_gt```
