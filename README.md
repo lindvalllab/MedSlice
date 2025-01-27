@@ -128,7 +128,7 @@ The CORAL dataset can be used as an example for running the sectioning tool in a
 
 If you use this repository, please cite our preprint:
 
-"""bibtex
+```bibtex
 @misc{davis2025medslicefinetunedlargelanguage,
       title={MedSlice: Fine-Tuned Large Language Models for Secure Clinical Note Sectioning}, 
       author={Joshua Davis and Thomas Sounack and Kate Sciacca and Jessie M Brain and Brigitte N Durieux and Nicole D Agaronnik and Charlotta Lindvall},
@@ -138,4 +138,4 @@ If you use this repository, please cite our preprint:
       primaryClass={cs.CL},
       url={https://arxiv.org/abs/2501.14105}, 
 }
-"""
+```
