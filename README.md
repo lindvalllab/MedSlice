@@ -123,3 +123,19 @@ The CORAL dataset can be used as an example for running the sectioning tool in a
          │  ├── pdfgenerator.py              <- Code to generate the PDF file with overlayed LLM sections.
          │  └── postprocessing.py            <- Code to extract the sections as text using indexes found with fuzzy matching.
          └── schema.json               <- Output schema passed to the model, as a json file.
+
+## Citation
+
+If you use this repository, please cite our preprint:
+
+"""bibtex
+@misc{davis2025medslicefinetunedlargelanguage,
+      title={MedSlice: Fine-Tuned Large Language Models for Secure Clinical Note Sectioning}, 
+      author={Joshua Davis and Thomas Sounack and Kate Sciacca and Jessie M Brain and Brigitte N Durieux and Nicole D Agaronnik and Charlotta Lindvall},
+      year={2025},
+      eprint={2501.14105},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2501.14105}, 
+}
+"""
