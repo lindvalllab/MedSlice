@@ -79,7 +79,7 @@ The CORAL dataset can be used as an example for running the sectioning tool in a
 2. **Notebook Example**  
    An example notebook demonstrating how to generate sections on both the annotated and unannotated CORAL datasets can be found in:
    ```bash
-   examples/coral.ipynb'
+   examples/coral.ipynb
    ```
    This notebook provides a step-by-step guide to using the sectioning tool interactively instead of running a script.
 
