@@ -3,7 +3,7 @@
 Repository for [MedSlice: Fine-Tuned Large Language Models for Secure Clinical Note Sectioning](https://arxiv.org/abs/2501.14105) (preprint)
 
 ## Overview
-This repository serves to generate RCH (History of Present Illness and Interval History) and AP (Assessment and Plan) sections for progress notes. The code provides tools for preprocessing data, running model inference, and generating output reports in CSV format, with the option to output a PDF to visualize the sections. You can use the `sectioning.py` script to execute these tasks directly from the command line, and the `finetuning.py` script to fine-tune a model for sectioning. Follow the steps below to set up the required environment and learn how to use the scripts.
+This repository serves to extract RCH (History of Present Illness and Interval History) and AP (Assessment and Plan) sections for progress notes. The code provides tools for preprocessing data, running model inference, and generating output reports in CSV format, with the option to output a PDF to visualize the sections. You can use the `sectioning.py` script to execute these tasks directly from the command line, and the `finetuning.py` script to fine-tune a model for sectioning. Follow the steps below to set up the required environment and learn how to use the scripts.
 
 ⚠️ *Please note that due to PHI data being used to train our models, we are not able to share them. However, you can reproduce the steps used during training with the `finetuning.py` script.*
 
